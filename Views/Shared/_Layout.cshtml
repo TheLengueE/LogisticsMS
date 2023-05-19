@@ -1,51 +1,58 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Mvc
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor;
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LogisticsMS</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/LogisticsMS.styles.css" asp-append-version="true" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/css/_Layout.css" />
 </head>
 <body>
 
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LogisticsMS</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="header">
+        <span class="system-name">物流管理系统</span>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - LogisticsMS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    @*业务员 调度员   司机  财务人员*@
+    @{
+#nullable disable
+        string userInfoJson = HttpContextAccessor.HttpContext.Session.GetString("UserInfo");
+        UserRole userinfo = JsonConvert.DeserializeObject<UserRole>(userInfoJson!)!;
+#nullable disable
+    }
+
+    <div class="menu">
+        <ul>
+            <li class="item"><a href="/Home/Index">个人信息管理</a></li>
+            @if (userinfo.RoleName == "业务员")
+            {
+                <li class="item"><a href="/Home/Business">业务管理</a></li>
+            }
+            else if (userinfo.RoleName == "调度员")
+            {
+                <li class="item"><a href="/Home/Dispatch">调度管理</a></li>
+            }
+            else if (userinfo.RoleName == "司机")
+            {
+                <li class="item"><a href="/Home/Transport">运输报备</a></li>
+            }
+            else if (userinfo.RoleName == "财务人员")
+            {
+                <li class="item"><a href="/Home/Finance">财务管理</a></li>
+            }
+        </ul>
+    </div>
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <hr />
+        <p class="footerp">© 2023 - My Website</p>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

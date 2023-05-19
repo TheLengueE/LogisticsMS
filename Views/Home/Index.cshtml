@@ -1,8 +1,40 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor;
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" href="~/css/Index.css" />
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @*
+    这个界面可以修改用户的:电话，邮箱，密码
+    但是要额外显示名字
+    *@
+
+    @{
+#nullable disable
+        string userInfoJson = HttpContextAccessor.HttpContext.Session.GetString("UserInfo");
+        UserRole userinfo = JsonConvert.DeserializeObject<UserRole>(userInfoJson!)!;
+#nullable disable
+    }
+    <p>你好,@userinfo.Name,在这里修改你的个人信息</p>
+    <form asp-action="UpdateProfile" method="post">
+        <input type="hidden" name="userId" value="@userinfo.Id" />
+        <div>
+            <label for="PhoneNumber">电话:</label>
+            <input type="tel" id="PhoneNumber" name="PhoneNumber" value="@userinfo.Phone" />
+        </div>
+        <div>
+            <label for="Email">邮箱:</label>
+            <input type="email" id="Email" name="Email" value="@userinfo.Email" />
+        </div>
+        <div>
+            <label for="Password">密码:</label>
+            <input type="password" id="Password" name="Password" value="@userinfo.password" />
+        </div>
+        <input type="submit" value="更新资料" />
+    </form>
 </div>
