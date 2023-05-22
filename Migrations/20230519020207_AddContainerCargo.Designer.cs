@@ -4,6 +4,7 @@ using LogisticsMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogisticsMS.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230519020207_AddContainerCargo")]
+    partial class AddContainerCargo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,55 +143,6 @@ namespace LogisticsMS.Migrations
                     b.ToTable("ContainerCargo");
                 });
 
-            modelBuilder.Entity("LogisticsMS.Models.ShippingOrders", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CarNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("车牌号");
-
-                    b.Property<string>("CarType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("汽车类型");
-
-                    b.Property<Guid>("ContainerCargoId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("送货单id");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("送货时间");
-
-                    b.Property<string>("DeliveryPerson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("送货人名字");
-
-                    b.Property<string>("DeliveryPhone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("送货人的电话号码");
-
-                    b.Property<int>("UserRoleId")
-                        .HasColumnType("int")
-                        .HasColumnName("送货人Id");
-
-                    b.Property<int>("state")
-                        .HasColumnType("int")
-                        .HasColumnName("订单状态");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ContainerCargoId");
-
-                    b.ToTable("ShippingOrders");
-                });
-
             modelBuilder.Entity("LogisticsMS.Models.UserRole", b =>
                 {
                     b.Property<int>("Id")
@@ -230,17 +184,6 @@ namespace LogisticsMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("LogisticsMS.Models.ShippingOrders", b =>
-                {
-                    b.HasOne("LogisticsMS.Models.ContainerCargo", "ContainerCargo")
-                        .WithMany()
-                        .HasForeignKey("ContainerCargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ContainerCargo");
                 });
 #pragma warning restore 612, 618
         }

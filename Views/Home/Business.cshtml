@@ -1,5 +1,64 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Business Page ";
 }
+<link rel="stylesheet" href="~/css/Business.css" />
+@model ContainerCargo;
+
+<div>
+    <form method="post" action="/Home/BusinessSubmit">
+        <p>录入集装箱运货单</p>
+        <label for="start">发货点:</label>
+        <input type="text" id="start" name="start"><br>
+        <label for="end">收货点:</label>
+        <input type="text" id="end" name="end"><br>
+        <label for="startCity">发货城市:</label>
+        <input type="text" id="startCity" name="startCity"><br>
+        <label for="endCity">收货城市:</label>
+        <input type="text" id="endCity" name="endCity"><br>
+
+
+        <label for="ShippersName">托运人名字:</label>
+        <input type="text" id="ShippersName" name="ShippersName"><br>
+        <label for="ShipperPhone">托用人电话:</label>
+        <input type="text" id="ShipperPhone" name="ShipperPhone"><br>
+        <label for="ShipperAddress">托运人地址:</label>
+        <input type="text" id="ShipperAddress" name="ShipperAddress"><br>
+        <label for="ShipperEmail">托运人邮箱:</label>
+        <input type="text" id="ShipperEmail" name="ShipperEmail"><br>
+
+        <label for="ConsigneeName">收货人名字:</label>
+        <input type="text" id="ConsigneeName" name="ConsigneeName"><br>
+        <label for="ConsigneePhone">收货人电话:</label>
+        <input type="text" id="ConsigneePhone" name="ConsigneePhone"><br>
+        <label for="ConsigneeAddress">收货人地址:</label>
+        <input type="text" id="ConsigneeAddress" name="ConsigneeAddress"><br>
+        <label for="ConsigneeEmail">收货人邮箱:</label>
+        <input type="text" id="ConsigneeEmail" name="ConsigneeEmail"><br>
+
+
+        <label for="ShipmentName">货物名称:</label>
+        <input type="text" id="ShipmentName" name="ShipmentName"><br>
+        <label for="ContainersType">集装箱类型:</label>
+        <input type="text" id="ContainersType" name="ContainersType"><br>
+        <label for="ContainersMany">集装箱数量:</label>
+        <input type="text" id="ContainersMany" name="ContainersMany"><br>
+        <label for="ContainersNumber">集装箱数量:</label>
+        <input type="text" id="ContainersNumber" name="ContainersNumber"><br>
+        <label for="ContainersClsoeNumber">施封号码:</label>
+        <input type="text" id="ContainersClsoeNumber" name="ContainersClsoeNumber"><br>
+        <label for="ContainersCost">运输费用:</label>
+        <input type="text" id="ContainersCost" name="ContainersCost"><br>
+
+        <label for="ShippersRemark">托运人记载:</label>
+        <input type="text" id="ShippersRemark" name="ShippersRemark"><br>
+        <label for="OtherFile">其它附件:</label>
+        <input type="text" id="OtherFile" name="OtherFile"><br>
+        <label for="CargoPrices">货物价格:</label>
+        <input type="text" id="CargoPrices" name="CargoPrices"><br>
+        <label for="TransportersRemark">运输员备注:</label>
+        <input type="text" id="TransportersRemark" name="TransportersRemark"><br>
+
+        <input type="submit" value="录入">
+    </form>
+
+</div>

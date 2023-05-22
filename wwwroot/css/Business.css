@@ -1,0 +1,39 @@
+﻿form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    text-align: center
+}
+
+div + div {
+    margin-top: 1em;
+}
+
+label {
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+}
+
+input[type="tel"],
+input[type="email"],
+input[type="password"] {
+    width: 200px;
+}
+
+input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+}
+
+input + input {
+    margin-left: 10px;
+}
+
+p {
+    text-align: center;
+    font-size: 24px;
+    font-family: "Georgia", serif;
+}
