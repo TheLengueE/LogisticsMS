@@ -54,7 +54,7 @@ div {
             background-color: #ddd;
         }
 
-.active {
-    background-color: #4CAF50;
-    color: white;
+
+input[name="ReimbursementForm.Reason"] {
+    width: 500px;
 }

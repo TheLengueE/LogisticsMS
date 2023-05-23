@@ -1,35 +1,34 @@
 ﻿@{
-    ViewData["Title"] = "Dispatch Page ";
+    ViewData["Title"] = "MyOrders Page ";
 }
+
 @model List<ShippingOrders>
 
 <head>
-    <link rel="stylesheet" href="~/css/ShippingOrders.css" />
+    <link rel="stylesheet" href="~/css/MyOrders.css" />
 </head>
 
 @if (Model.Count == 0)
 {
-    <p>当前没有需要调度的订单记录</p>
+    <p>未查找到未完成的订单</p>
 }
 else
 {
-    <form method="post" action="/Home/DispatchSubmit">
+    <form method="post" action="/Home/OrderSumbit">
         <table>
             <tr>
                 <input type="hidden" name="ShippingOrder.Id" value="@Model[0].Id" />
-                <input type="hidden" name="ShippingOrder.ContainerCargoId" value="@Model[0].ContainerCargoId" />
-                <input type="hidden" name="ShippingOrder.state" value="@Model[0].state" />
-                <input type="hidden" name="ShippingOrder.ContainerCargo" value="@Model[0].ContainerCargo" />
-
 
                 <th>发站:</th>
                 <th>@Model[0].ContainerCargo?.Start</th>
                 <th>到站:</th>
                 <th>@Model[0].ContainerCargo?.End</th>
+
                 <th>汽车类型:</th>
-                <td><input type="text" name="ShippingOrder.CarType" value="@Model[0].CarType" /></td>
+                <th>@Model[0].CarType</th>
+
                 <th>车牌号:</th>
-                <td><input type="text" name="ShippingOrder.CarNumber" value="@Model[0].CarNumber" />
+                <th>@Model[0].CarNumber</th>
             </tr>
 
             <tr>
@@ -63,42 +62,42 @@ else
 
             <tr>
                 <th>送货人:</th>
-                <td><input type="text" name="ShippingOrder.DeliveryPerson" value="@Model[0].DeliveryPerson" /></td>
+                <th>@Model[0].DeliveryPerson</th>
 
                 <th>送货人电话号码:</th>
-                <td><input type="text" name="ShippingOrder.DeliveryPhone" value="@Model[0].DeliveryPhone" /></td>
+                <th>@Model[0].DeliveryPhone</th>
 
                 <th>货物名称:</th>
                 <th>@Model[0].ContainerCargo?.ShipmentName</th>
 
                 <th>送货日期:</th>
-                <td><input type="date" name="ShippingOrder.DeliveryDate" value="@Model[0].DeliveryDate.ToString("yyyy-MM-dd")" /></td>
+                <th>@Model[0].DeliveryDate.ToString("yyyy-MM-dd")</th>
             </tr>
         </table>
-        <input type="submit" value="保存修改" />
+        <input type="submit" value="完成订单" />
     </form>
 
     <div>
         @if (ViewBag.PageNumber > 1)
         {
-            <a href="@Url.Action("Dispatch", new { page = ViewBag.PageNumber - 1 })">上一页</a>
+            <a href="@Url.Action("MyOrders", new { page = ViewBag.PageNumber - 1 })">上一页</a>
         }
         @for (int i = 1; i <= ViewBag.PageCount; i++)
         {
             if (i == ViewBag.PageNumber)
             {
-                <a class="active" href="@Url.Action("Dispatch", new { page = i })">@i</a>
+                <a class="active" href="@Url.Action("MyOrders", new { page = i })">@i</a>
             }
             else
             {
-                <a href="@Url.Action("Dispatch", new { page = i })">@i</a>
+                <a href="@Url.Action("MyOrders", new { page = i })">@i</a>
             }
-
         }
         @if (ViewBag.PageNumber < ViewBag.PageCount)
         {
-            <a href="@Url.Action("Dispatch", new { page = ViewBag.PageNumber + 1 })">下一页</a>
+            <a href="@Url.Action("MyOrders", new { page = ViewBag.PageNumber + 1 })">下一页</a>
         }
+
     </div>
 }
 
