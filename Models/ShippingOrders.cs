@@ -8,6 +8,7 @@ namespace LogisticsMS.Models
 		[Key]
 		public Guid Id { get; set; }
 
+		[ForeignKey("ContainerCargo")]
 		[Column("送货单id")]
 		public Guid ContainerCargoId { get; set; }
 

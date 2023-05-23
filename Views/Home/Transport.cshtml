@@ -5,18 +5,25 @@
 <form method="post" action="/Home/RFSubmit">
     <table>
         <tr>
-            <th>申报人名字:</th>
-            <td><input type="text" name="ReimbursementForm.Name" ></td>
-
-            <th>申报金额:</th>
-            <td><input type="text" name="ReimbursementForm.Amount"  /></td>
-
-            <th>申报日期:</th>
-            <td><input type="date" name="ReimbursementForm.Date"  /></td>
+            <th>业务单编号:</th>
+            <td><input type="text" name="ReimbursementForm.ContainerCargoId" /></td>
         </tr>
         <tr>
+            <th>申报人名字:</th>
+            <td><input type="text" name="ReimbursementForm.Name"></td>
+
+            <th>申报金额:</th>
+            <td><input type="text" name="ReimbursementForm.Amount" /></td>
+
+            <th>申报日期:</th>
+            <td><input type="date" name="ReimbursementForm.Date" /></td>
+
+
+        </tr>
+
+        <tr>
             <th>申报理由:</th>
-            <td><input type="text" name="ReimbursementForm.Reason"  /></td>
+            <td><input type="text" name="ReimbursementForm.Reason" /></td>
         </tr>
     </table>
     <input type="submit" value="提交申请" />

@@ -17,8 +17,12 @@ else
     <form method="post" action="/Home/OrderSumbit">
         <table>
             <tr>
+                <th>业务单号:</th>
+                <th>@Model[0].ContainerCargoId</th>
+            </tr>
+            <tr>
                 <input type="hidden" name="ShippingOrder.Id" value="@Model[0].Id" />
-
+                
                 <th>发站:</th>
                 <th>@Model[0].ContainerCargo?.Start</th>
                 <th>到站:</th>
