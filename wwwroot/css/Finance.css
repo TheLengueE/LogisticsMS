@@ -1,0 +1,65 @@
+﻿table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 75%;
+    margin: auto;
+    border: 1px solid #ddd;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+div {
+    text-align: center;
+}
+
+    div a {
+        color: black;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+        div a:hover {
+            background-color: #ddd;
+        }
+
+
+input[name="ReimbursementForm.Reason"] {
+    width: 500px;
+}
+
+div a.active {
+    background-color: #4CAF50;
+    color: white;
+}

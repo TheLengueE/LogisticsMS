@@ -4,6 +4,7 @@ using LogisticsMS.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogisticsMS.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    partial class SqlContextModelSnapshot : ModelSnapshot
+    [Migration("20230524025322_为业务单添加完成状态的属性")]
+    partial class 为业务单添加完成状态的属性
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

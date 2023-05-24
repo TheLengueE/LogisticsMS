@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore;
 using LogisticsMS.Migrations;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LogisticsMS.Controllers
 {
@@ -62,9 +63,64 @@ namespace LogisticsMS.Controllers
 			return View();
 		}
 
-		public IActionResult Finance()
+		public IActionResult Finance(DateTime startDate, DateTime endDate, string Shippers, string Delivery, int page = 1)
 		{
-			return View();
+			ViewBag.startDate = startDate;
+			ViewBag.endDate = endDate;
+			ViewBag.shippers = Shippers;
+			ViewBag.delivery = Delivery;
+
+			using (var db = new SqlContext())
+			{
+				int pageSize = 1;
+				List<Statistics> results = (from so in db.ShippingOrders
+											where so.state == 3
+											join cc in db.ContainerCargo on so.ContainerCargoId equals cc.Id
+											join rf in db.ReimbursementForms on cc.Id equals rf.ContainerCargoId into rfs
+											from rf in rfs.DefaultIfEmpty()
+											group new { so, cc, rf } by new { so.ContainerCargoId, so.DeliveryPerson, cc.ShippersName, cc.ShipmentName, so.DeliveryDate, cc.ContainersCost } into g
+											select new Statistics
+											{
+												ContainerCargoId = g.Key.ContainerCargoId,
+												DeliveryPerson = g.Key.DeliveryPerson,
+												ShippersName = g.Key.ShippersName,
+												ShipmentName = g.Key.ShipmentName,
+												DeliveryDate = g.Key.DeliveryDate,
+												ContainersCost = g.Key.ContainersCost,
+												AllCost = g.Sum(x => x.rf != null && x.rf.stage == 2 ? Convert.ToDecimal(x.rf.Amount) : 0).ToString(),
+												Profit = (Convert.ToDecimal(g.Key.ContainersCost) - g.Sum(x => x.rf != null && x.rf.stage == 2 ? Convert.ToDecimal(x.rf.Amount) : 0)).ToString()
+											})
+								.ToList();
+
+				if (!startDate.Equals(null) && startDate != DateTime.MinValue)
+				{
+					results = results.Where(x => x.DeliveryDate >= startDate).ToList();
+				}
+				if (!endDate.Equals(null) && endDate != DateTime.MinValue)
+				{
+					results = results.Where(x => x.DeliveryDate <= endDate).ToList();
+				}
+				if (!string.IsNullOrEmpty(Shippers))
+				{
+					results = results.Where(x => x.ShippersName == Shippers).ToList();
+				}
+				if (!string.IsNullOrEmpty(Delivery))
+				{
+					results = results.Where(x => x.DeliveryPerson == Delivery).ToList();
+				}
+
+				//分页
+				ViewBag.PageNumber = page;
+				var pagedResults = results.Skip((page - 1) * pageSize).Take(pageSize);
+
+				//计算总页数
+				int totalCount = results.Count;
+				int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+				ViewBag.PageCount = totalPages;
+
+				return View("Finance", pagedResults.ToList());
+			}
+
 		}
 
 		public IActionResult Index()
